@@ -1,10 +1,14 @@
 require('dotenv').config();
 const { readdirSync } = require('fs');
-const { Client, Collection, GatewayIntentBits, ActivityType } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, Partials, ActivityType, ChannelType } = require('discord.js');
 
 const client = new Client({
     failIfNotExists: false,
+    partials: [
+        Partials.Channel
+    ],
     intents: [
+        GatewayIntentBits.DirectMessages, // comment or remove this if bot shouldn't receive DM messages
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent
@@ -21,7 +25,7 @@ for (const file of pCommandFiles) {
 
 client.once('ready', async () => {
     console.log(`${client.user.username} is ready!`);
-    client.user.setActivity("SA-MP", { type: ActivityType.Competing });
+    client.user.setActivity("SA-MP", { type: ActivityType.Competing }); // use ActivityType enum to change it to Watching, Playing or Listening
 });
 
 client.on('messageCreate', async message => {
@@ -38,11 +42,21 @@ client.on('messageCreate', async message => {
 
     try{
         await command.run(client, message, args);
-        console.log(`[CMD] ${message.guild.name}(${message.guild.id}) | ${message.author.tag}(${message.author.id}) | ${message.content}`);
+
+        if(message.channel.type == ChannelType.DM)
+            console.log(`[CMD_DM] ${message.author.tag} (${message.author.id}) | ${message.content}`);
+        else
+            console.log(`[CMD] ${message.guild.name}(${message.guild.id}) | ${message.author.tag}(${message.author.id}) | ${message.content}`);
     }
     catch (error){
-        console.log(`[CMD_ERR] ${message.guild.name}(${message.guild.id}) | ${message.author.tag}(${message.author.id}) | ${message.content}`);
+        if(message.channel.type == ChannelType.DM)
+            console.log(`[CMD_DM_ERR] ${message.author.tag} (${message.author.id}) | ${message.content}`);
+        else
+            console.log(`[CMD_ERR] ${message.guild.name}(${message.guild.id}) | ${message.author.tag}(${message.author.id}) | ${message.content}`);
+
         console.error(error);
+
+        message.reply('An error occurred!');
     }
 });
 

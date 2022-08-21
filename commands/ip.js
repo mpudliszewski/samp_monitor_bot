@@ -17,7 +17,7 @@ module.exports = {
             port: ip[1] || 7777
         };
 
-        const color = await message.guild.members.fetch(client.user.id).then(color => color.displayHexColor);
+        const color = await message.guild?.members.fetch(message.client.user.id).then(color => color.displayHexColor) || '#000000';
         await samp(options, (error, query) => {
             if(error){
                 embed.setColor(color);

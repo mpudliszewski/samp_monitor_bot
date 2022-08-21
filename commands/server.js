@@ -9,7 +9,7 @@ module.exports = {
         if(!process.env.SAMP_IP)
             return message.channel.send('IP address is not set in the .env file!');
 
-        const color = await message.guild.members.fetch(message.client.user.id).then(color => color.displayHexColor);
+        const color = await message.guild?.members.fetch(message.client.user.id).then(color => color.displayHexColor) || '#000000';
 
         const ip = process.env.SAMP_IP.split(':');
         const options = {

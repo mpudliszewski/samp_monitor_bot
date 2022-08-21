@@ -6,7 +6,7 @@ module.exports = {
     aliases: [],
     description: 'Returns latency and API ping',
     run: async (client, message, args) => {
-        const color = await message.guild.members.fetch(message.client.user.id).then(color => color.displayHexColor);
+        const color = await message.guild?.members.fetch(message.client.user.id).then(color => color.displayHexColor) || '#000000';
         return message.channel.send(`Pinging...`).then((msg) => {
             const embed = new EmbedBuilder()
                 .setTitle(`Pong!`)

@@ -14,7 +14,7 @@ Discord Bot that displays informations about San Andreas Multiplayer server
 
 * Open `.env` file and put there preferred prefix, token of the bot and IP of a SAMP server
 
-* Run bot using `npm .` command
+* Run bot using `node .` command
 
 ## Available commands
 * `ip` - Shows IP address of a SA:MP Server

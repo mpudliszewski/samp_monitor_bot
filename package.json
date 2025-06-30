@@ -11,7 +11,7 @@
   "dependencies": {
     "ascii-table": "0.0.9",
     "discord.js": "^14.2.0",
-    "dotenv": "^16.0.1",
+    "dotenv": "^17.0.0",
     "samp-query": "^0.1.5"
   }
 }
